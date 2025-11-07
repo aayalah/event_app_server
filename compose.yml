@@ -1,0 +1,62 @@
+version: '3.9'
+
+services:
+
+  db:
+    image: postgres
+    restart: always
+    ports: 
+      - 5455:5432
+    # set shared memory limit when using docker-compose
+    shm_size: 128mb
+    # or set shared memory limit when deploy via swarm stack
+    #volumes:
+    #  - type: tmpfs
+    #    target: /dev/shm
+    #    tmpfs:
+    #      size: 134217728 # 128*2^20 bytes = 128Mb
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: events
+
+#   adminer:
+#     image: adminer
+#     restart: always
+#     ports:
+#       - 8080:8080
+
+#   elasticsearch:
+#     image: docker.elastic.co/elasticsearch/elasticsearch:8.8.2
+#     container_name: elasticsearch
+#     environment:
+#       - node.name=es-node
+#       - discovery.type=single-node
+#       - ES_JAVA_OPTS=-Xms512m -Xmx512m
+#       - xpack.security.enabled=false
+#     ports:
+#       - "9200:9200"
+#       - "9300:9300"
+#     volumes:
+#       - esdata:/usr/share/elasticsearch/data
+#     networks:
+#       - esnet
+
+#   kibana:
+#     image: docker.elastic.co/kibana/kibana:8.8.2
+#     container_name: kibana
+#     environment:
+#       ELASTICSEARCH_HOSTS: "http://elasticsearch:9200"
+#     ports:
+#       - "5601:5601"
+#     depends_on:
+#       - elasticsearch
+#     networks:
+#       - esnet
+
+
+# volumes:
+#   esdata:
+
+# networks:
+#   esnet:
