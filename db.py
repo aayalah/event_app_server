@@ -5,7 +5,8 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-dsn = f"postgresql+asyncpg://postgres:postgres@localhost:5455/{os.getenv('POSTGRES_DB', 'postgres')}"
+dsn = f"{os.getenv('POSTGRES_DB_URL')}"
+
 engine = create_async_engine(dsn, echo=False)
 
 AsyncSessionLocal = async_sessionmaker(
