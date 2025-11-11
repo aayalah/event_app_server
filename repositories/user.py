@@ -7,8 +7,8 @@ class User:
     def __init__(self, db: AsyncSession):
         self.db = db 
 
-    async def create(self, name: str, email: str) -> User_Model:
-        user = User_Model(user_name=name, email=email)
+    async def create(self, full_name: str, user_name: str, email: str, password_hash: str) -> User_Model:
+        user = User_Model(full_name=full_name, user_name=user_name, email=email, password_hash=password_hash)
         self.db.add(user)
         await self.db.commit()
         await self.db.refresh(user)
@@ -18,7 +18,7 @@ class User:
     async def get(self, user_name: str, password: str) -> User_Model:
         print(user_name)
         print(password)
-        stmt = select(User_Model).where(and_(User_Model.user_name == user_name, User_Model.password == password))
+        stmt = select(User_Model).where(and_(User_Model.user_name == user_name, User_Model.password_hash == password))
         result =  await self.db.execute(stmt)
         print(result)
         user = result.scalar_one_or_none()
