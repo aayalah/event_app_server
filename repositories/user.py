@@ -15,12 +15,8 @@ class User:
         return user
     
 
-    async def get(self, user_name: str, password: str) -> User_Model:
-        print(user_name)
-        print(password)
-        stmt = select(User_Model).where(and_(User_Model.user_name == user_name, User_Model.password_hash == password))
+    async def get(self, email: str) -> User_Model:
+        stmt = select(User_Model).where(User_Model.email == email)
         result =  await self.db.execute(stmt)
-        print(result)
         user = result.scalar_one_or_none()
-        print(user)
         return user
