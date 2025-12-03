@@ -2,10 +2,11 @@ from pydantic import BaseModel
 
 
 class LoginRequest(BaseModel):
-   user_name: str
+   email: str
    password: str 
 
 
 class LoginResponse(BaseModel):
-   token: str
-   refresh_token: str
+   user_name: str
+   email: str
+   full_name: str
